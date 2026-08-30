@@ -7,97 +7,112 @@ import plotly.express as px
 import shap
 
 # ==============================================================================
-# 1. PAGE CONFIGURATION & ENTERPRISE DESIGN SYSTEM
+# 1. PAGE CONFIGURATION & EXTRA-LARGE HIGH-READABILITY DESIGN SYSTEM
 # ==============================================================================
 st.set_page_config(
     page_title="Credit Risk & Explainable AI Platform",
     page_icon="🏦",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
-# Custom CSS for Large, High-Contrast Typography & Modern Slate Card Design System
+# Custom CSS for World-Class Minimalist FinTech UI with Extra-Large Typography
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap');
     
     html, body, [class*="css"] {
         font-family: 'Prompt', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        font-size: 17px;
+        font-size: 18px;
+        line-height: 1.6;
+        color: #F8FAFC;
     }
     
-    /* Main Top Header */
-    .hero-container {
-        padding: 0.5rem 0rem 1.4rem 0rem;
-        border-bottom: 2px solid rgba(148, 163, 184, 0.2);
-        margin-bottom: 1.8rem;
+    /* Hero Header */
+    .hero-header {
+        padding: 1.0rem 0rem 1.8rem 0rem;
+        border-bottom: 2px solid #334155;
+        margin-bottom: 2.2rem;
     }
     .hero-title {
-        font-size: 2.4rem;
+        font-size: 2.5rem;
         font-weight: 800;
         letter-spacing: -0.03em;
         margin: 0;
-        line-height: 1.25;
+        line-height: 1.2;
+        color: #F8FAFC;
     }
     .hero-subtitle {
-        color: #64748B;
-        font-size: 1.2rem;
-        margin-top: 0.4rem;
+        color: #94A3B8;
+        font-size: 1.3rem;
+        margin-top: 0.5rem;
         margin-bottom: 0;
-        font-weight: 500;
+        font-weight: 400;
+        line-height: 1.4;
     }
     
     /* Section Headings */
-    .section-header {
-        font-size: 1.55rem;
-        font-weight: 700;
-        margin-bottom: 0.35rem;
+    .section-title {
+        font-size: 1.9rem;
+        font-weight: 800;
+        color: #F8FAFC;
+        margin-bottom: 0.4rem;
         letter-spacing: -0.02em;
     }
-    .section-caption {
-        font-size: 1.08rem;
-        color: #64748B;
-        margin-bottom: 1.4rem;
+    .section-subtitle {
+        font-size: 1.2rem;
+        color: #94A3B8;
+        margin-bottom: 1.6rem;
         font-weight: 400;
     }
     
-    /* Large High-Contrast KPI Cards */
+    /* Control Box Container */
+    .controls-card {
+        background: #1E293B;
+        border: 1px solid #334155;
+        border-radius: 18px;
+        padding: 1.8rem 2.0rem;
+        margin-bottom: 2.0rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Big KPI Metric Cards */
     .kpi-card {
         background: #1E293B;
         border: 1px solid #334155;
-        border-radius: 16px;
-        padding: 1.6rem 1.8rem;
+        border-radius: 18px;
+        padding: 1.8rem 2.0rem;
         transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-        min-height: 165px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        min-height: 180px;
     }
     .kpi-card:hover {
         border-color: #38BDF8;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
     }
     .kpi-label {
-        font-size: 1.05rem;
+        font-size: 1.25rem;
         text-transform: uppercase;
         letter-spacing: 0.06em;
         color: #94A3B8;
         font-weight: 700;
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.4rem;
     }
-    .kpi-value {
-        font-size: 2.7rem;
+    .kpi-number {
+        font-size: 3.2rem;
         font-weight: 800;
         letter-spacing: -0.03em;
         line-height: 1.1;
         color: #F8FAFC;
     }
     .kpi-delta {
-        font-size: 1.05rem;
+        font-size: 1.15rem;
         font-weight: 600;
-        margin-top: 0.4rem;
+        margin-top: 0.6rem;
         color: #CBD5E1;
     }
     
@@ -108,9 +123,9 @@ st.markdown("""
         color: #34D399;
         border: 2px solid #059669;
         border-radius: 12px;
-        padding: 0.6rem 1.3rem;
+        padding: 0.65rem 1.4rem;
         font-weight: 800;
-        font-size: 1.15rem;
+        font-size: 1.25rem;
         letter-spacing: 0.02em;
     }
     .badge-rejected {
@@ -119,9 +134,9 @@ st.markdown("""
         color: #F87171;
         border: 2px solid #DC2626;
         border-radius: 12px;
-        padding: 0.6rem 1.3rem;
+        padding: 0.65rem 1.4rem;
         font-weight: 800;
-        font-size: 1.15rem;
+        font-size: 1.25rem;
         letter-spacing: 0.02em;
     }
     .badge-warning {
@@ -130,9 +145,9 @@ st.markdown("""
         color: #FBBF24;
         border: 2px solid #D97706;
         border-radius: 12px;
-        padding: 0.6rem 1.3rem;
+        padding: 0.65rem 1.4rem;
         font-weight: 800;
-        font-size: 1.15rem;
+        font-size: 1.25rem;
         letter-spacing: 0.02em;
     }
     
@@ -141,86 +156,92 @@ st.markdown("""
         background: #1E293B;
         border: 1px solid #334155;
         border-left: 6px solid #EF4444;
-        border-radius: 0 14px 14px 0;
-        padding: 1.2rem 1.4rem;
-        margin-bottom: 1.0rem;
+        border-radius: 0 16px 16px 0;
+        padding: 1.3rem 1.6rem;
+        margin-bottom: 1.2rem;
     }
     .reason-code {
         font-weight: 800;
         color: #F87171;
-        font-size: 1.1rem;
-        margin-bottom: 0.2rem;
+        font-size: 1.2rem;
+        margin-bottom: 0.3rem;
     }
     .reason-title {
         font-weight: 700;
-        font-size: 1.15rem;
+        font-size: 1.25rem;
         color: #F1F5F9;
-        margin-bottom: 0.35rem;
+        margin-bottom: 0.4rem;
     }
     .reason-desc {
         color: #CBD5E1;
-        font-size: 1.02rem;
+        font-size: 1.12rem;
         line-height: 1.5;
     }
     .reason-recourse {
-        margin-top: 0.6rem;
-        padding-top: 0.45rem;
+        margin-top: 0.7rem;
+        padding-top: 0.55rem;
         border-top: 1px dashed #334155;
-        font-size: 0.98rem;
+        font-size: 1.08rem;
         color: #34D399;
         font-weight: 600;
     }
 
-    /* Modal / Dialog Step Cards */
+    /* Dictionary & Guide Cards */
+    .dict-card {
+        background: #1E293B;
+        border: 1px solid #334155;
+        border-radius: 14px;
+        padding: 1.2rem 1.4rem;
+        margin-bottom: 1.0rem;
+    }
+    .dict-term {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #38BDF8;
+        margin-bottom: 0.3rem;
+    }
+    .dict-desc {
+        font-size: 1.1rem;
+        color: #E2E8F0;
+        line-height: 1.55;
+    }
+
     .guide-step-card {
         background: #1E293B;
         border: 1px solid #334155;
         border-left: 5px solid #38BDF8;
-        border-radius: 0 12px 12px 0;
-        padding: 1.1rem 1.3rem;
+        border-radius: 0 14px 14px 0;
+        padding: 1.2rem 1.4rem;
         margin-bottom: 1.0rem;
     }
     .guide-step-title {
         font-weight: 700;
-        font-size: 1.15rem;
+        font-size: 1.25rem;
         color: #F8FAFC;
     }
     .guide-step-desc {
-        font-size: 1.02rem;
-        color: #94A3B8;
-        margin-top: 0.35rem;
-        line-height: 1.45;
-    }
-
-    /* Dictionary Term Card */
-    .dict-card {
-        background: #1E293B;
-        border: 1px solid #334155;
-        border-radius: 12px;
-        padding: 1.1rem 1.3rem;
-        margin-bottom: 0.9rem;
-    }
-    .dict-term {
-        font-size: 1.15rem;
-        font-weight: 700;
-        color: #38BDF8;
-        margin-bottom: 0.25rem;
-    }
-    .dict-desc {
-        font-size: 1.02rem;
-        color: #E2E8F0;
+        font-size: 1.1rem;
+        color: #CBD5E1;
+        margin-top: 0.4rem;
         line-height: 1.5;
     }
 
     /* Tab Headers */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 14px;
+        gap: 16px;
     }
     .stTabs [data-baseweb="tab"] {
-        border-radius: 12px 12px 0px 0px;
-        padding: 14px 28px;
+        border-radius: 14px 14px 0px 0px;
+        padding: 16px 32px;
         font-weight: 700;
-        font-size: 1.15rem;
+        font-size: 1.25rem;
+    }
+    
+    /* Streamlit Slider and Input labels */
+    div[data-testid="stWidgetLabel"] label {
+        font-size: 1.2rem !important;
+        font-weight: 700 !important;
+        color: #F8FAFC !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -314,52 +335,47 @@ REASON_CODE_MAPPING = {
 }
 
 # ==============================================================================
-# 3. INTERACTIVE MODAL DIALOGS
+# 3. INTERACTIVE MODAL DIALOG (User Guide & Financial Dictionary)
 # ==============================================================================
 if "has_seen_welcome" not in st.session_state:
     st.session_state.has_seen_welcome = False
 
-@st.dialog("👋 Welcome to Credit Risk & Explainable AI Platform")
-def show_welcome_dialog():
-    st.markdown("""
-    ### 🏦 Enterprise Credit Risk Intelligence Platform
-    แพลตฟอร์มบริหารจัดการความเสี่ยงสินเชื่ออัจฉริยะ ผสานพลัง **Machine Learning (LightGBM)**, **Explainable AI (TreeSHAP)**, และ **Regulatory Adverse Action Engine** ตามมาตรฐานสากล FCRA/ECOA
-    """)
-    st.markdown("---")
-    st.markdown("#### 🚀 Quick Start Guide (3 ขั้นตอนง่ายๆ ในการใช้งาน):")
+@st.dialog("📖 คู่มือและพจนานุกรมคำศัพท์การเงิน (User Guide & Dictionary)")
+def show_guide_and_glossary_dialog():
+    tab_m1, tab_m2 = st.tabs(["🚀 คู่มือเริ่มต้นใช้งาน (Quick Guide)", "📚 พจนานุกรมศัพท์ & ตัวแปร (Dictionary)"])
     
-    st.markdown("""
-    <div class="guide-step-card">
-        <div class="guide-step-title">🎯 Step 1: ปรับแต่งนโยบายและกำไรพอร์ตโฟลิโอ (Tab 1)</div>
-        <div class="guide-step-desc">ปรับเกณฑ์ <b>Cut-off PD</b>, <b>อัตราดอกเบี้ย</b>, และ <b>LGD</b> เพื่อดูสัดส่วนการอนุมัติ, อัตราหนี้เสีย (EDR) และกำไรสุทธิแบบ Real-time</div>
-    </div>
-    <div class="guide-step-card">
-        <div class="guide-step-title">👤 Step 2: ประเมินคะแนนเครดิตรายบุคคล & รับคำแนะนำ (Tab 2)</div>
-        <div class="guide-step-desc">ใส่รหัสผู้กู้เพื่อดูคะแนน <b>Credit Score (300–850)</b> และหากถูกปฏิเสธ ระบบจะออก <b>หนังสือแจ้งเหตุผล (Reason Codes)</b> พร้อม <b>แนวทางปรับปรุงวงเงิน/ค่างวด (Recourse)</b></div>
-    </div>
-    <div class="guide-step-card">
-        <div class="guide-step-title">⚡ Step 3: ทดสอบภาวะวิกฤตเศรษฐกิจ & ตรวจจับ Data Drift (Tab 3)</div>
-        <div class="guide-step-desc">จำลองวิกฤตเศรษฐกิจ (เงินเฟ้อ/ดอกเบี้ยพุ่ง) เพื่อคำนวณ <b>Expected Loss</b> และติดตามความเสถียรของประชากรผู้กู้ด้วย <b>PSI Index</b></div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("<br>", unsafe_allow_html=True)
-    if st.button("🚀 Got it / Start Exploring (เริ่มต้นใช้งาน)", type="primary", use_container_width=True):
-        st.session_state.has_seen_welcome = True
-        st.rerun()
+    with tab_m1:
+        st.markdown("""
+        ### 🏦 แพลตฟอร์มบริหารความเสี่ยงสินเชื่อและ Explainable AI
+        ระบบประเมินความเสี่ยงสินเชื่ออัจฉริยะ ผสานพลัง **Machine Learning (LightGBM)** และ **TreeSHAP** ตามมาตรฐานสากล FCRA/ECOA
+        """)
+        st.markdown("---")
+        st.markdown("""
+        <div class="guide-step-card">
+            <div class="guide-step-title">🎯 1. จำลองนโยบายและกำไรพอร์ตโฟลิโอ (Tab 1)</div>
+            <div class="guide-step-desc">ปรับเกณฑ์ <b>Cut-off PD</b>, <b>อัตราดอกเบี้ย</b>, และ <b>LGD</b> เพื่อดูสัดส่วนการอนุมัติ, อัตราหนี้เสีย (EDR) และกำไรสุทธิแบบ Real-time</div>
+        </div>
+        <div class="guide-step-card">
+            <div class="guide-step-title">👤 2. ประเมินคะแนนเครดิตรายบุคคล & คำแนะนำทางเลือก (Tab 2)</div>
+            <div class="guide-step-desc">ใส่รหัสผู้กู้เพื่อดูคะแนน <b>Credit Score (300–850)</b> และหากถูกปฏิเสธ ระบบจะออก <b>หนังสือแจ้งเหตุผล (Reason Codes)</b> พร้อม <b>แนวทางปรับปรุงวงเงิน/ค่างวด (Recourse)</b></div>
+        </div>
+        <div class="guide-step-card">
+            <div class="guide-step-title">⚡ 3. ทดสอบภาวะวิกฤตเศรษฐกิจ & ตรวจจับ Data Drift (Tab 3)</div>
+            <div class="guide-step-desc">จำลองวิกฤตเศรษฐกิจ (เงินเฟ้อ/ดอกเบี้ยพุ่ง) เพื่อคำนวณ <b>Expected Loss</b> และติดตามความเสถียรของประชากรผู้กู้ด้วย <b>PSI Index</b></div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("🚀 เข้าใจแล้ว / เริ่มต้นใช้งาน (Start Exploring)", type="primary", use_container_width=True):
+            st.session_state.has_seen_welcome = True
+            st.rerun()
 
-@st.dialog("📖 Financial & Variable Dictionary")
-def show_glossary_dialog():
-    st.markdown("### 📖 พจนานุกรมศัพท์การเงินและตัวแปรแบบละเอียด")
-    st.caption("คำอธิบายคำศัพท์ทางเทคนิคและตัวแปรในระบบสินเชื่อเพื่อการเข้าใจที่ง่ายขึ้น")
-    
-    tab_g1, tab_g2, tab_g3 = st.tabs(["🏛️ Financial & Risk Metrics", "📊 Machine Learning & Monitoring", "🔬 Key Model Variables"])
-    
-    with tab_g1:
+    with tab_m2:
+        st.markdown("#### 🏛️ ศัพท์การเงินและตัวแปรหลักในระบบสินเชื่อ")
         st.markdown("""
         <div class="dict-card">
             <div class="dict-term">PD (Probability of Default)</div>
-            <div class="dict-desc">ความน่าจะเป็นที่ผู้กู้จะไม่สามารถชำระหนี้ได้ตามสัญญาภายในระยะเวลาที่กำหนด (ค่าอยู่ระหว่าง 0.0% – 100.0%) ยิ่งต่ำยิ่งปลอดภัย</div>
+            <div class="dict-desc">ความน่าจะเป็นที่ผู้กู้จะไม่สามารถชำระหนี้ได้ตามสัญญาภายในระยะเวลาที่กำหนด (0.0% – 100.0%) ยิ่งต่ำยิ่งปลอดภัย</div>
         </div>
         <div class="dict-card">
             <div class="dict-term">LGD (Loss Given Default)</div>
@@ -377,30 +393,10 @@ def show_glossary_dialog():
             <div class="dict-term">Credit Scorecard (300–850)</div>
             <div class="dict-desc">คะแนนเครดิตมาตรฐานสากล แปลงจากค่า Odds ของความน่าจะเป็น โดยคะแนน 750+ จัดอยู่ในกลุ่ม Super Prime</div>
         </div>
-        """, unsafe_allow_html=True)
-
-    with tab_g2:
-        st.markdown("""
         <div class="dict-card">
             <div class="dict-term">PSI (Population Stability Index)</div>
-            <div class="dict-desc">ดัชนีชี้วัดการเปลี่ยนแปลงของประชากรผู้กู้ (Data Drift):
-                <br>• <b>&lt; 0.10:</b> 🟢 เสถียร (Stable)
-                <br>• <b>0.10 – 0.25:</b> 🟡 เฝ้าระวัง (Moderate Drift)
-                <br>• <b>&gt; 0.25:</b> 🔴 จำเป็นต้องรีเทรนโมเดล (Significant Drift)
-            </div>
+            <div class="dict-desc">ดัชนีชี้วัดการเปลี่ยนแปลงของประชากรผู้กู้ (Data Drift): &lt;0.10 เสถียร, 0.10–0.25 เฝ้าระวัง, &gt;0.25 ต้องรีเทรนโมเดล</div>
         </div>
-        <div class="dict-card">
-            <div class="dict-term">TreeSHAP (Shapley Additive Explanations)</div>
-            <div class="dict-desc">วิธีการทางทฤษฎีเกมสำหรับคำนวณผลกระทบของแต่ละตัวแปรต่อผลการทำนาย โดยค่าบวกคือเพิ่มความเสี่ยง และค่าลบคือลดความเสี่ยง</div>
-        </div>
-        <div class="dict-card">
-            <div class="dict-term">ICAAP Stress Testing</div>
-            <div class="dict-desc">การทดสอบภาวะวิกฤตภายใต้กรอบการประเมินความเพียงพอของเงินกองทุนของธนาคารพาณิชย์</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with tab_g3:
-        st.markdown("""
         <div class="dict-card">
             <div class="dict-term">EXT_SOURCES_MEAN</div>
             <div class="dict-desc">คะแนนเครดิตบูโรและสถาบันภายนอกเฉลี่ยรวม 3 แหล่ง (ตัวแปรที่มีพลังจำแนกความเสี่ยงสูงสุด)</div>
@@ -409,76 +405,54 @@ def show_glossary_dialog():
             <div class="dict-term">CREDIT_TERM</div>
             <div class="dict-desc">สัดส่วนภาระค่างวดต่อเดือนเทียบกับวงเงินกู้รวม (<code>AMT_ANNUITY / AMT_CREDIT</code>)</div>
         </div>
-        <div class="dict-card">
-            <div class="dict-term">ANNUITY_INCOME_PERCENT (DTI)</div>
-            <div class="dict-desc">สัดส่วนภาระค่างวดต่อรายได้รวมต่อปี บ่งชี้ความตึงตัวทางการเงินของผู้กู้</div>
-        </div>
-        <div class="dict-card">
-            <div class="dict-term">cash_flow_volatility</div>
-            <div class="dict-desc">ความผันผวนของประวัติกระแสเงินสดหมุนเวียน (ยิ่งต่ำยิ่งบ่งบอกถึงสภาพคล่องที่สม่ำเสมอ)</div>
-        </div>
-        <div class="dict-card">
-            <div class="dict-term">INST_DPD_MAX</div>
-            <div class="dict-desc">จำนวนวันค้างชำระสูงสุดในอดีต (Days Past Due)</div>
-        </div>
         """, unsafe_allow_html=True)
 
 # Trigger welcome modal on initial session load
 if not st.session_state.has_seen_welcome:
-    show_welcome_dialog()
+    show_guide_and_glossary_dialog()
 
 # ==============================================================================
-# 4. ULTRA-CLEAN SIDEBAR
+# 4. TOP HERO HEADER & ACTION BUTTONS
 # ==============================================================================
-with st.sidebar:
-    st.markdown("### 🏦 System Controls")
-    st.caption("Credit Policy & Underwriting Engine")
-    
-    st.markdown("---")
-    st.markdown("#### ⚙️ Global Cut-off Policy")
-    default_cutoff = st.slider(
-        "Global Cut-off PD (%)",
-        min_value=4.0, max_value=30.0, value=18.0, step=1.0,
-        help="Probability of Default (PD) threshold for loan approval across all modules."
-    ) / 100.0
-    
-    st.markdown("---")
-    st.markdown("#### 🔬 Progressive Disclosure")
-    show_advanced = st.toggle(
-        "Show Advanced Analytics",
-        value=False,
-        help="Toggle to display TreeSHAP waterfall charts, policy trade-off tables, and statistical formulas."
-    )
-    
-    st.markdown("---")
-    st.caption(f"**Model:** LightGBM 5-Folds Tuned")
-    st.caption(f"**Dataset Universe:** {len(df):,} records")
-    st.caption(f"**Engineered Features:** {len(feature_cols)} features")
-
-# ==============================================================================
-# 5. DASHBOARD HERO HEADER & ACTION BUTTONS
-# ==============================================================================
-h_col1, h_col2 = st.columns([3, 1.2])
+h_col1, h_col2 = st.columns([3.2, 1.3])
 
 with h_col1:
     st.markdown("""
-    <div class="hero-container">
+    <div class="hero-header">
         <div class="hero-title">🏦 Credit Risk Scoring & Explainable AI Platform</div>
         <div class="hero-subtitle">Enterprise-Grade Risk Scoring, Point Scorecard (300–850), Adverse Action & Recourse Engine</div>
     </div>
     """, unsafe_allow_html=True)
 
 with h_col2:
-    st.markdown("<div style='margin-top: 0.75rem;'></div>", unsafe_allow_html=True)
-    b_col1, b_col2 = st.columns(2)
-    with b_col1:
-        if st.button("ℹ️ User Guide", use_container_width=True, help="เปิดคู่มือการใช้งานและขั้นตอนเบื้องต้น"):
-            show_welcome_dialog()
-    with b_col2:
-        if st.button("📖 Dictionary", use_container_width=True, help="เปิดพจนานุกรมคำศัพท์ทางการเงินและตัวแปร"):
-            show_glossary_dialog()
+    st.markdown("<div style='margin-top: 0.8rem;'></div>", unsafe_allow_html=True)
+    if st.button("📖 คู่มือและพจนานุกรมคำศัพท์ (Guide & Dictionary)", type="secondary", use_container_width=True, help="เปิดคู่มือเริ่มต้นใช้งานและคำอธิบายศัพท์การเงิน"):
+        show_guide_and_glossary_dialog()
 
-# Main Navigation Tabs
+# ==============================================================================
+# 5. SIDEBAR (ULTRA-MINIMAL)
+# ==============================================================================
+with st.sidebar:
+    st.markdown("### ⚙️ System Options")
+    default_cutoff = st.slider(
+        "Global Cut-off PD (%)",
+        min_value=4.0, max_value=30.0, value=18.0, step=1.0,
+        help="Probability of Default threshold for loan approval across the platform."
+    ) / 100.0
+    
+    show_advanced = st.toggle(
+        "Show Advanced Analytics (🔬)",
+        value=False,
+        help="เปิดเพื่อดูค่า SHAP Waterfall แบบละเอียดและตารางวิเคราะห์สถิติเชิงลึก"
+    )
+    st.markdown("---")
+    st.caption(f"**Model:** LightGBM 5-Folds Tuned")
+    st.caption(f"**Portfolio Size:** {len(df):,} records")
+    st.caption(f"**Features:** {len(feature_cols)} columns")
+
+# ==============================================================================
+# 6. MAIN NAVIGATION TABS
+# ==============================================================================
 tab1, tab2, tab3 = st.tabs([
     "🎯 Policy Simulator & Net Profit",
     "👤 Individual Underwriting & Recourse",
@@ -489,34 +463,37 @@ tab1, tab2, tab3 = st.tabs([
 # TAB 1: POLICY SIMULATOR & NET PROFIT OPTIMIZATION
 # ==============================================================================
 with tab1:
-    st.markdown('<div class="section-header">🎯 Portfolio Credit Policy & Profitability Optimization</div>', unsafe_allow_html=True)
-    st.markdown('<div class="section-caption">จำลองและปรับแต่งเกณฑ์การอนุมัติสินเชื่อ (Cut-off PD), อัตราดอกเบี้ย, และสมมติฐาน LGD เพื่อค้นหาจุดสมดุลสูงสุดของกำไรสุทธิ (Net Profit)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">🎯 Portfolio Credit Policy & Profitability Optimization</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-subtitle">จำลองและปรับแต่งเกณฑ์การอนุมัติสินเชื่อ (Cut-off PD), อัตราดอกเบี้ย, และสมมติฐาน LGD เพื่อค้นหาจุดสมดุลสูงสุดของกำไรสุทธิ (Net Profit)</div>', unsafe_allow_html=True)
 
-    # Control Sliders with Context-Aware Tooltips
-    c_p1, c_p2, c_p3 = st.columns(3)
-    with c_p1:
-        cut_off_pd = st.slider(
-            "Cut-off PD Threshold (%)",
-            min_value=4.0, max_value=30.0, value=default_cutoff * 100.0, step=0.5,
-            format="%.1f%%",
-            help="กำหนดเกณฑ์ Probability of Default สูงสุดที่จะอนุมัติสินเชื่อ (ค่าเริ่มต้น 18.0%)"
-        ) / 100.0
-    with c_p2:
-        avg_interest_rate = st.slider(
-            "Average Loan Interest Rate (%)",
-            min_value=5.0, max_value=25.0, value=15.0, step=0.5,
-            format="%.1f%%",
-            help="อัตราดอกเบี้ยเงินกู้เฉลี่ยต่อปีสำหรับคำนวณรายได้ดอกเบี้ยของพอร์ตโฟลิโอ"
-        ) / 100.0
-    with c_p3:
-        lgd_assumption = st.slider(
-            "Loss Given Default - LGD (%)",
-            min_value=20.0, max_value=70.0, value=45.0, step=5.0,
-            format="%.0f%%",
-            help="สัดส่วนความเสียหายจริงเมื่อเกิดหนี้เสียหลังจากติดตามหนี้แล้ว (ค่ามาตรฐานอุตสาหกรรม 45%)"
-        ) / 100.0
+    # Control Parameters Row wrapped in a clean container
+    with st.container():
+        st.markdown('<div class="controls-card">', unsafe_allow_html=True)
+        c_p1, c_p2, c_p3 = st.columns(3)
+        with c_p1:
+            cut_off_pd = st.slider(
+                "Cut-off PD Threshold (%)",
+                min_value=4.0, max_value=30.0, value=default_cutoff * 100.0, step=0.5,
+                format="%.1f%%",
+                help="เกณฑ์ Probability of Default สูงสุดที่จะอนุมัติสินเชื่อ (ค่าเริ่มต้น 18.0%)"
+            ) / 100.0
+        with c_p2:
+            avg_interest_rate = st.slider(
+                "Average Loan Interest Rate (%)",
+                min_value=5.0, max_value=25.0, value=15.0, step=0.5,
+                format="%.1f%%",
+                help="อัตราดอกเบี้ยเงินกู้เฉลี่ยต่อปีเพื่อคำนวณรายได้ดอกเบี้ยของพอร์ต"
+            ) / 100.0
+        with c_p3:
+            lgd_assumption = st.slider(
+                "Loss Given Default - LGD (%)",
+                min_value=20.0, max_value=70.0, value=45.0, step=5.0,
+                format="%.0f%%",
+                help="สัดส่วนความเสียหายจริงเมื่อเกิดหนี้เสียหลังจากติดตามหนี้แล้ว (ค่ามาตรฐาน 45%)"
+            ) / 100.0
+        st.markdown('</div>', unsafe_allow_html=True)
 
-    # Simulation Computation
+    # Simulation Calculation
     sample_eval = df.sample(15000, random_state=42).copy()
     preds_eval = model.predict_proba(sample_eval[feature_cols])[:, 1]
 
@@ -533,15 +510,14 @@ with tab1:
     default_loss = float(sample_eval.loc[approved_mask & (sample_eval['TARGET'] == 1), 'AMT_CREDIT'].sum()) * lgd_assumption
     net_profit = interest_revenue - default_loss
 
-    # Prominent Big KPI Cards
-    st.markdown("<br>", unsafe_allow_html=True)
+    # 4 Big KPI Summary Cards (Extra Large 3.2rem)
     kpi1, kpi2, kpi3, kpi4 = st.columns(4)
     
     with kpi1:
         st.markdown(f"""
         <div class="kpi-card">
             <div class="kpi-label">Approval Rate</div>
-            <div class="kpi-value" style="color: #34D399;">{approval_rate:.1f}%</div>
+            <div class="kpi-number" style="color: #34D399;">{approval_rate:.1f}%</div>
             <div class="kpi-delta">{n_approved:,} จาก {n_total:,} สัญญา</div>
         </div>
         """, unsafe_allow_html=True)
@@ -550,7 +526,7 @@ with tab1:
         st.markdown(f"""
         <div class="kpi-card">
             <div class="kpi-label">Expected Default (EDR)</div>
-            <div class="kpi-value" style="color: {'#F87171' if edr > 8.0 else '#FBBF24'};">{edr:.2f}%</div>
+            <div class="kpi-number" style="color: {'#F87171' if edr > 8.0 else '#FBBF24'};">{edr:.2f}%</div>
             <div class="kpi-delta">{n_defaults:,} หนี้เสียที่หลุดอนุมัติ</div>
         </div>
         """, unsafe_allow_html=True)
@@ -559,7 +535,7 @@ with tab1:
         st.markdown(f"""
         <div class="kpi-card">
             <div class="kpi-label">Approved Exposure</div>
-            <div class="kpi-value">{total_credit_approved/1e6:,.1f} M</div>
+            <div class="kpi-number">{total_credit_approved/1e6:,.1f} M</div>
             <div class="kpi-delta">วงเงินสินเชื่อรวมที่อนุมัติ (บาท)</div>
         </div>
         """, unsafe_allow_html=True)
@@ -568,8 +544,8 @@ with tab1:
         st.markdown(f"""
         <div class="kpi-card">
             <div class="kpi-label">Simulated Net Profit</div>
-            <div class="kpi-value" style="color: {'#34D399' if net_profit > 0 else '#F87171'};">{net_profit/1e6:+,.2f} M</div>
-            <div class="kpi-delta">ดอกเบี้ย: {(interest_revenue/1e6):.1f}M | เสีย: {(default_loss/1e6):.1f}M</div>
+            <div class="kpi-number" style="color: {'#34D399' if net_profit > 0 else '#F87171'};">{net_profit/1e6:+,.2f} M</div>
+            <div class="kpi-delta">ดอกเบี้ย: {(interest_revenue/1e6):.1f}M | หนี้เสีย: {(default_loss/1e6):.1f}M</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -586,16 +562,16 @@ with tab1:
             textinfo='percent+label',
             textposition='inside',
             insidetextorientation='radial',
-            textfont=dict(size=14, family='Prompt, Inter')
+            textfont=dict(size=15, family='Prompt, Inter')
         )])
         fig_donut.update_layout(
             title="<b>Portfolio Approval & Default Breakdown</b>",
             margin=dict(t=50, b=20, l=20, r=20),
-            height=370,
+            height=390,
             showlegend=False,
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#F1F5F9', size=14)
+            font=dict(color='#F1F5F9', size=15)
         )
         st.plotly_chart(fig_donut, use_container_width=True)
 
@@ -614,7 +590,7 @@ with tab1:
         * **Loss per Default Case:** `{(default_loss / max(n_defaults, 1)):,.0f} THB`
         """)
 
-    # Progressive Disclosure (Deep Dive)
+    # Deep Dive Expander
     if show_advanced:
         with st.expander("🔬 Deep Dive: Policy Trade-off Curve & Strategy Scenarios", expanded=True):
             st.markdown("#### 📊 Standard Strategy Benchmark Leaderboard")
@@ -641,27 +617,27 @@ with tab1:
 # TAB 2: INDIVIDUAL UNDERWRITING & RECOURSE ENGINE
 # ==============================================================================
 with tab2:
-    st.markdown('<div class="section-header">👤 Individual Credit Underwriting & Recourse Engine</div>', unsafe_allow_html=True)
-    st.markdown('<div class="section-caption">ประเมินความเสี่ยงรายบุคคล, คำนวณคะแนน <b>Credit Scorecard (300–850)</b>, สร้าง <b>หนังสือแจ้งปฏิเสธ (Adverse Action Notice)</b>, และจำลอง <b>เงื่อนไขทางเลือก (Actionable Recourse)</b></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">👤 Individual Credit Underwriting & Recourse Engine</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-subtitle">ประเมินความเสี่ยงรายบุคคล, คำนวณคะแนน <b>Credit Scorecard (300–850)</b>, สร้าง <b>หนังสือแจ้งปฏิเสธ (Adverse Action Notice)</b>, และจำลอง <b>เงื่อนไขทางเลือก (Actionable Recourse)</b></div>', unsafe_allow_html=True)
 
-    # Applicant Selection Row
-    col_sel1, col_sel2 = st.columns([1, 2])
+    # Applicant Selection
+    col_sel1, col_sel2 = st.columns([1.2, 2.5])
     with col_sel1:
         seed_choice = st.number_input(
-            "Enter Applicant Seed ID (Random Lookup)",
+            "Enter Applicant Seed ID",
             value=281935,
             step=1,
             help="ใส่ตัวเลขเพื่อสุ่มเลือกประวัติผู้กู้จากฐานข้อมูล (ลองใช้ 281935 หรือ 100003)"
         )
     with col_sel2:
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("<div style='margin-top: 2.2rem;'></div>", unsafe_allow_html=True)
         st.caption("💡 **ตัวอย่างรหัสผู้กู้:** `281935` (เคสเสี่ยงสูง / ถูกปฏิเสธ), `100003` (เคสเครดิตดีเยี่ยม / ได้รับอนุมัติ)")
 
     applicant_row = df.sample(1, random_state=int(seed_choice)).copy()
     app_id = int(applicant_row['SK_ID_CURR'].values[0])
     actual_label = int(applicant_row['TARGET'].values[0])
 
-    # Model Inference
+    # Model Evaluation
     pred_prob = float(model.predict_proba(applicant_row[feature_cols])[:, 1][0])
     
     # Calibrated Point Scorecard Formula (300 to 850 scale)
@@ -689,30 +665,30 @@ with tab2:
 
     # Hero Assessment Card
     st.markdown("<br>", unsafe_allow_html=True)
-    c_dec1, c_dec2 = st.columns([1.1, 1.4])
+    c_dec1, c_dec2 = st.columns([1.2, 1.4])
 
     with c_dec1:
         status_html = f'<span class="badge-approved">🟢 APPROVED (ผ่านเกณฑ์)</span>' if is_approved else f'<span class="badge-rejected">🔴 REJECTED (ไม่ผ่านเกณฑ์)</span>'
         
         st.markdown(f"""
-        <div class="kpi-card" style="min-height: 220px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.9rem;">
-                <span style="font-size: 1.15rem; font-weight: 700; color: #F1F5F9;">Applicant ID: <code>#{app_id}</code></span>
+        <div class="kpi-card" style="min-height: 250px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.0rem;">
+                <span style="font-size: 1.25rem; font-weight: 700; color: #F1F5F9;">Applicant ID: <code>#{app_id}</code></span>
                 {status_html}
             </div>
-            <div style="display: flex; gap: 36px; align-items: baseline; margin-top: 0.6rem;">
+            <div style="display: flex; gap: 40px; align-items: baseline; margin-top: 0.8rem;">
                 <div>
                     <div class="kpi-label">Credit Score</div>
-                    <div class="kpi-value" style="color: {grade_color};">{credit_score} <span style="font-size: 1.15rem; color: #94A3B8; font-weight: 500;">/ 850</span></div>
-                    <div style="font-size: 1.05rem; font-weight: 700; color: {grade_color}; margin-top: 0.3rem;">{score_grade} Tier</div>
+                    <div class="kpi-number" style="color: {grade_color};">{credit_score} <span style="font-size: 1.3rem; color: #94A3B8; font-weight: 500;">/ 850</span></div>
+                    <div style="font-size: 1.15rem; font-weight: 700; color: {grade_color}; margin-top: 0.4rem;">{score_grade} Tier</div>
                 </div>
                 <div>
                     <div class="kpi-label">Default Risk (PD)</div>
-                    <div class="kpi-value" style="color: {'#34D399' if is_approved else '#F87171'};">{pred_prob*100:.2f}%</div>
-                    <div style="font-size: 1.02rem; color: #94A3B8; font-weight: 600; margin-top: 0.3rem;">เกณฑ์อนุมัติ: {cut_off_pd*100:.1f}%</div>
+                    <div class="kpi-number" style="color: {'#34D399' if is_approved else '#F87171'};">{pred_prob*100:.2f}%</div>
+                    <div style="font-size: 1.12rem; color: #94A3B8; font-weight: 600; margin-top: 0.4rem;">เกณฑ์อนุมัติ: {cut_off_pd*100:.1f}%</div>
                 </div>
             </div>
-            <div style="margin-top: 1.2rem; padding-top: 0.8rem; border-top: 1px solid #334155; font-size: 1.02rem; color: #94A3B8;">
+            <div style="margin-top: 1.3rem; padding-top: 0.9rem; border-top: 1px solid #334155; font-size: 1.1rem; color: #94A3B8;">
                 ประวัติการชำระจริงในอดีต: <b style="color: #F1F5F9;">{'หนี้เสีย (Default)' if actual_label == 1 else 'ชำระปกติ (Good Loan)'}</b>
             </div>
         </div>
@@ -723,7 +699,7 @@ with tab2:
         fig_gauge = go.Figure(go.Indicator(
             mode="gauge+number",
             value=credit_score,
-            number={'suffix': " pts", 'font': {'size': 28, 'family': 'Prompt, Inter', 'color': '#F8FAFC'}},
+            number={'suffix': " pts", 'font': {'size': 32, 'family': 'Prompt, Inter', 'color': '#F8FAFC'}},
             gauge={
                 'axis': {'range': [300, 850], 'tickwidth': 1, 'tickcolor': "#94A3B8"},
                 'bar': {'color': grade_color, 'thickness': 0.32},
@@ -744,10 +720,10 @@ with tab2:
         ))
         fig_gauge.update_layout(
             margin=dict(t=40, b=10, l=30, r=30),
-            height=230,
+            height=250,
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
-            title={'text': "<b>Point Scorecard Gauge (300–850)</b>", 'font': {'size': 15, 'color': '#F1F5F9'}}
+            title={'text': "<b>Point Scorecard Gauge (300–850)</b>", 'font': {'size': 16, 'color': '#F1F5F9'}}
         )
         st.plotly_chart(fig_gauge, use_container_width=True)
 
@@ -861,10 +837,10 @@ with tab2:
                 xaxis_title="SHAP Value (Red = Increases Risk, Green = Reduces Risk)",
                 yaxis_title="Feature Name",
                 margin=dict(l=150, r=20, t=40, b=30),
-                height=380,
+                height=400,
                 paper_bgcolor='rgba(0,0,0,0)',
                 plot_bgcolor='rgba(0,0,0,0)',
-                font=dict(color='#F1F5F9', size=13)
+                font=dict(color='#F1F5F9', size=14)
             )
             st.plotly_chart(fig_shap, use_container_width=True)
 
@@ -872,8 +848,8 @@ with tab2:
 # TAB 3: MACROECONOMIC STRESS TESTING & PSI TRACKER
 # ==============================================================================
 with tab3:
-    st.markdown('<div class="section-header">⚡ Macroeconomic Stress Testing & Population Drift Tracker</div>', unsafe_allow_html=True)
-    st.markdown('<div class="section-caption">จำลองวิกฤตเศรษฐกิจภายใต้กรอบ <b>ICAAP (Internal Capital Adequacy Assessment Process)</b> และติดตามการเบี่ยงเบนของกลุ่มประชากรผู้กู้ด้วย <b>Population Stability Index (PSI)</b></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">⚡ Macroeconomic Stress Testing & Population Drift Tracker</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-subtitle">จำลองวิกฤตเศรษฐกิจภายใต้กรอบ <b>ICAAP (Internal Capital Adequacy Assessment Process)</b> และติดตามการเบี่ยงเบนของกลุ่มประชากรผู้กู้ด้วย <b>Population Stability Index (PSI)</b></div>', unsafe_allow_html=True)
 
     col_m1, col_m2 = st.columns(2)
 
@@ -894,17 +870,17 @@ with tab3:
         delta_el = el_val - 348.0
 
         st.markdown(f"""
-        <div style="display: flex; gap: 16px; margin-top: 1.2rem;">
+        <div style="display: flex; gap: 20px; margin-top: 1.4rem;">
             <div class="kpi-card" style="flex: 1;">
                 <div class="kpi-label">Simulated NPL</div>
-                <div class="kpi-value" style="color: {'#F87171' if npl_val > 25.02 else '#34D399'};">{npl_val:.2f}%</div>
+                <div class="kpi-number" style="color: {'#F87171' if npl_val > 25.02 else '#34D399'};">{npl_val:.2f}%</div>
                 <div class="kpi-delta" style="color: {'#F87171' if npl_val > 25.02 else '#94A3B8'};">
                     {f'+{(npl_val - 25.02):.2f}% vs Baseline' if npl_val > 25.02 else 'Baseline Risk Level'}
                 </div>
             </div>
             <div class="kpi-card" style="flex: 1;">
                 <div class="kpi-label">Expected Loss (EL)</div>
-                <div class="kpi-value" style="color: {'#F87171' if delta_el > 0 else '#34D399'};">{el_val:.1f} M</div>
+                <div class="kpi-number" style="color: {'#F87171' if delta_el > 0 else '#34D399'};">{el_val:.1f} M</div>
                 <div class="kpi-delta" style="color: {'#F87171' if delta_el > 0 else '#94A3B8'};">
                     {f'Buffer Delta: +{delta_el:.1f} M THB' if delta_el > 0 else 'Standard Capital Buffer'}
                 </div>
@@ -942,15 +918,15 @@ with tab3:
             psi_msg = "ประชากรผู้กู้เปลี่ยนแปลงอย่างมีนัยสำคัญ ความแม่นยำโมเดลอาจลดลง ควรเริ่มกระบวนการ Retrain ทันที"
 
         st.markdown(f"""
-        <div class="kpi-card" style="margin-top: 1.2rem; min-height: 200px;">
+        <div class="kpi-card" style="margin-top: 1.4rem; min-height: 220px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
                     <div class="kpi-label">Population Stability Index</div>
-                    <div class="kpi-value">{psi_metric:.4f}</div>
+                    <div class="kpi-number">{psi_metric:.4f}</div>
                 </div>
                 <div>{psi_status}</div>
             </div>
-            <div style="margin-top: 1.1rem; font-size: 1.05rem; color: #CBD5E1; line-height: 1.5;">
+            <div style="margin-top: 1.2rem; font-size: 1.15rem; color: #CBD5E1; line-height: 1.5;">
                 {psi_msg}
             </div>
         </div>
