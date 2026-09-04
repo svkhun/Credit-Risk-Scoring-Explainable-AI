@@ -72,11 +72,16 @@ flowchart TD
 - **Outlier Treatment:** Soft Winsorization capping extreme values at the 99th percentile for heavy-tailed income and transaction metrics.
 - **Domain Financial Ratios:**
 
-$$\text{CREDIT\textunderscore TERM} = \frac{\text{AMT\textunderscore CREDIT}}{\text{AMT\textunderscore ANNUITY}}$$
+$$\text{Credit Term} = \frac{\text{Total Credit Amount}}{\text{Monthly Installment}}$$
 
-$$\text{ANNUITY\textunderscore INCOME\textunderscore RATIO} = \frac{\text{AMT\textunderscore ANNUITY}}{\text{AMT\textunderscore INCOME\textunderscore TOTAL}}$$
+$$\text{Annuity-to-Income Ratio} = \frac{\text{Monthly Installment}}{\text{Total Income}}$$
 
-$$\text{EXT\textunderscore SOURCES\textunderscore MEAN} = \frac{\text{EXT\textunderscore SOURCE\textunderscore 1} + \text{EXT\textunderscore SOURCE\textunderscore 2} + \text{EXT\textunderscore SOURCE\textunderscore 3}}{3}$$
+$$\text{External Sources Mean} = \frac{\text{External Source 1} + \text{External Source 2} + \text{External Source 3}}{3}$$
+
+*Engineered Feature Definitions:*
+- `CREDIT_TERM` = `AMT_CREDIT` / `AMT_ANNUITY` *(Loan duration proxy)*
+- `ANNUITY_INCOME_RATIO` = `AMT_ANNUITY` / `AMT_INCOME_TOTAL` *(Debt burden)*
+- `EXT_SOURCES_MEAN` = (`EXT_SOURCE_1` + `EXT_SOURCE_2` + `EXT_SOURCE_3`) / 3 *(Bureau composite)*
 
 - **Weight of Evidence ($\text{WoE}$) & Information Value ($\text{IV}$):** Features evaluated with monotonic binning. Only variables with $\text{IV} \ge 0.02$ retained; multicollinear features pruned using Variance Inflation Factor ($\text{VIF} < 5.0$).
 
