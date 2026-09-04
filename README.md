@@ -72,11 +72,11 @@ flowchart TD
 - **Outlier Treatment:** Soft Winsorization capping extreme values at the 99th percentile for heavy-tailed income and transaction metrics.
 - **Domain Financial Ratios:**
 
-$$\text{CREDIT\_TERM} = \frac{\text{AMT\_CREDIT}}{\text{AMT\_ANNUITY}}$$
+$$\text{CREDIT\textunderscore TERM} = \frac{\text{AMT\textunderscore CREDIT}}{\text{AMT\textunderscore ANNUITY}}$$
 
-$$\text{ANNUITY\_INCOME\_RATIO} = \frac{\text{AMT\_ANNUITY}}{\text{AMT\_INCOME\_TOTAL}}$$
+$$\text{ANNUITY\textunderscore INCOME\textunderscore RATIO} = \frac{\text{AMT\textunderscore ANNUITY}}{\text{AMT\textunderscore INCOME\textunderscore TOTAL}}$$
 
-$$\text{EXT\_SOURCES\_MEAN} = \frac{\text{EXT\_SOURCE\_1} + \text{EXT\_SOURCE\_2} + \text{EXT\_SOURCE\_3}}{3}$$
+$$\text{EXT\textunderscore SOURCES\textunderscore MEAN} = \frac{\text{EXT\textunderscore SOURCE\textunderscore 1} + \text{EXT\textunderscore SOURCE\textunderscore 2} + \text{EXT\textunderscore SOURCE\textunderscore 3}}{3}$$
 
 - **Weight of Evidence ($\text{WoE}$) & Information Value ($\text{IV}$):** Features evaluated with monotonic binning. Only variables with $\text{IV} \ge 0.02$ retained; multicollinear features pruned using Variance Inflation Factor ($\text{VIF} < 5.0$).
 
