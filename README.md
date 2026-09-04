@@ -15,8 +15,8 @@
 The **Credit Risk Scoring & Explainable AI Platform** is an enterprise-grade, quantitative underwriting and credit intelligence solution. It bridges rigorous **Basel II/III internal ratings-based (IRB)** credit risk modeling with **Explainable AI (TreeSHAP / DiCE Counterfactuals)** and modern, reactive full-stack web engineering.
 
 Traditional "black-box" machine learning models often deliver superior discriminatory power ($AUC \approx 0.78+$) compared to legacy scorecards ($AUC \approx 0.73$), but fail regulatory compliance due to opacity. This platform addresses this trade-off by combining:
-1. **High-Discrimination GBDT Modeling:** 5-Fold Stratified LightGBM achieving **$AUC\text{-}ROC = 0.7854$** and **$KS\text{-Statistic} = 43.17\%$**.
-2. **Standard FICO Point Calibration:** Mathematical log-odds mapping onto a classic **$300\text{--}850$ credit score range** ($\text{Base}=600$, $\text{PDO}=20$).
+1. **High-Discrimination GBDT Modeling:** 5-Fold Stratified LightGBM achieving **AUC-ROC = 0.7854** and **KS-Statistic = 43.17%**.
+2. **Standard FICO Point Calibration:** Mathematical log-odds mapping onto a classic **300–850 credit score range** ($\text{Base}=600$, $\text{PDO}=20$).
 3. **Adverse Action Reason Codes (FCRA / ECOA):** Automated extraction of top negative risk drivers mapped into legally compliant adverse notices.
 4. **Actionable Counterfactual Recourse (DiCE):** Prescriptive financial adjustments (e.g., loan reduction, tenure extension) to flip rejections into approvals.
 5. **Macro Stress Testing & Data Drift (ICAAP / Basel III):** Real-time Population Stability Index ($\text{PSI}$) tracking and economic scenario simulation to assess required Capital Buffer Deltas.
@@ -71,9 +71,13 @@ flowchart TD
 - **Missing Value Imputation:** Domain-aware median imputation for skewed numerical attributes; missing categorical states tracked via explicit `"Missing"` level.
 - **Outlier Treatment:** Soft Winsorization capping extreme values at the 99th percentile for heavy-tailed income and transaction metrics.
 - **Domain Financial Ratios:**
-  $$\text{CREDIT\_TERM} = \frac{\text{AMT\_ANNUITY}}{\text{AMT\_CREDIT}}$$
-  $$\text{ANNUITY\_INCOME\_PERCENT} = \frac{\text{AMT\_ANNUITY}}{\text{AMT\_INCOME\_TOTAL}}$$
-  $$\text{EXT\_SOURCES\_MEAN} = \frac{\text{EXT\_SOURCE\_1} + \text{EXT\_SOURCE\_2} + \text{EXT\_SOURCE\_3}}{3}$$
+
+$$\text{CREDIT\_TERM} = \frac{\text{AMT\_CREDIT}}{\text{AMT\_ANNUITY}}$$
+
+$$\text{ANNUITY\_INCOME\_RATIO} = \frac{\text{AMT\_ANNUITY}}{\text{AMT\_INCOME\_TOTAL}}$$
+
+$$\text{EXT\_SOURCES\_MEAN} = \frac{\text{EXT\_SOURCE\_1} + \text{EXT\_SOURCE\_2} + \text{EXT\_SOURCE\_3}}{3}$$
+
 - **Weight of Evidence ($\text{WoE}$) & Information Value ($\text{IV}$):** Features evaluated with monotonic binning. Only variables with $\text{IV} \ge 0.02$ retained; multicollinear features pruned using Variance Inflation Factor ($\text{VIF} < 5.0$).
 
 ### 2. Model Benchmark & Statistical Performance
@@ -106,7 +110,7 @@ $$\text{Credit Score} = \text{clip}\left(487.12 + 28.8539 \times \ln(\text{Odds}
 #### Scorecard Calibration Parameters
 - **Base Score:** $600$ Points at Base Odds of $50:1$
 - **Points to Double Odds ($\text{PDO}$):** $20$ Points
-- **Policy Cut-off Threshold:** $\text{PD} \le 18.0\% \implies \text{Score} \ge 531 \text{ Points}$
+- **Policy Cut-off Threshold:** $\text{PD} \le 0.180 \implies \text{Score} \ge 531 \text{ Points}$
 - **Population Distribution:** Mean = $566.01$, Median = $568.00$, $\text{IQR} = [549, 584]$
 
 ---
@@ -147,12 +151,12 @@ Under the **Fair Credit Reporting Act (FCRA)** and **Equal Credit Opportunity Ac
 | **`RC_04`** | `CREDIT_TERM` | $> 0.055$ | Monthly installment burden is too high relative to credit | Extend loan tenure to reduce the monthly annuity burden |
 | **`RC_05`** | `AMT_ANNUITY` | High | Monthly payment exceeds disposable income ceiling | Reduce loan amount or increase down payment |
 | **`RC_06`** | `cash_flow_volatility` | $> 0.30$ | Elevated month-to-month cash flow volatility | Maintain stable average account balance reserves for 3–6 months |
-| **`RC_GEN_1`** | `COMPOSITE_SCORE` | $\text{PD} > 18\%$ | Overall risk score below minimum bank cut-off | Reduce loan exposure or add creditworthy co-signers |
+| **`RC_GEN_1`** | `COMPOSITE_SCORE` | $\text{PD} > 0.180$ | Overall risk score below minimum bank cut-off | Reduce loan exposure or add creditworthy co-signers |
 
 ### 2. Actionable Counterfactual Recourse (DiCE Optimization)
 Rather than simply rejecting an applicant, the engine executes constrained optimization across mutable features (`AMT_CREDIT`, `AMT_ANNUITY`, `AMT_GOODS_PRICE`) while freezing immutable demographic features (`DAYS_BIRTH`, `CODE_GENDER`):
 
-$$\min_{\mathbf{x}^*} \text{dist}(\mathbf{x}, \mathbf{x}^*) \quad \text{subject to} \quad f(\mathbf{x}^*) \le \text{Cut-off PD } (0.180)$$
+$$\min_{\mathbf{x}^{\ast}} \text{dist}(\mathbf{x}, \mathbf{x}^{\ast}) \quad \text{subject to} \quad f(\mathbf{x}^{\ast}) \le \text{Cut-off PD } (0.180)$$
 
 #### Recourse Action Matrix
 1. **Loan Principal Reduction:** Reduce requested loan amount by $20\%$ $\implies \text{Simulated PD drops from } 64.8\% \text{ to } 55.1\%$.
@@ -166,7 +170,7 @@ $$\min_{\mathbf{x}^*} \text{dist}(\mathbf{x}, \mathbf{x}^*) \quad \text{subject 
 ### 1. Population Stability Index ($\text{PSI}$) Formulation
 The monitoring pipeline continuously evaluates score distribution shifts between the baseline training cohort ($E_i$) and incoming production streams ($A_i$):
 
-$$\text{PSI} = \sum_{i=1}^{k} \left( A_i\% - E_i\% \right) \times \ln\left( \frac{A_i\%}{E_i\%} \right)$$
+$$\text{PSI} = \sum_{i=1}^{k} \left( \text{Actual}_i - \text{Expected}_i \right) \times \ln\left( \frac{\text{Actual}_i}{\text{Expected}_i} \right)$$
 
 ```
      PSI < 0.10          0.10 <= PSI <= 0.25               PSI > 0.25
